@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About — Aaron Wojtaszek</title>
+    <meta name="description" content="About Aaron Wojtaszek — background, experience, and education." />
+    <meta name="author" content="Aaron Wojtaszek" />
+    <meta name="referrer" content="no-referrer" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-52634255-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-52634255-2');
+    </script>
+</head>
+<body>
+
+    <!-- Mobile Header -->
+    <div class="mobile-header">
+        <div class="mobile-header-name"><a href="index.html">Aaron Wojtaszek</a></div>
+        <button class="menu-toggle" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+    <div class="mobile-overlay"></div>
+
+    <div class="site-wrapper">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div>
+                <div class="sidebar-header">
+                    <div class="sidebar-name"><a href="index.html">Aaron Wojtaszek</a></div>
+                    <p class="sidebar-tagline">Senior Product Manager</p>
+                </div>
+
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html" class="active">About</a></li>
+                        <li><a href="publications.html">Publications</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="sidebar-social">
+                <a href="https://www.linkedin.com/in/aaronwojtaszek/" aria-label="LinkedIn"><i class="icon brands fa-linkedin-in"></i></a>
+                <a href="https://github.com/aaronwojtaszek" aria-label="GitHub"><i class="icon brands fa-github"></i></a>
+                <a href="mailto:aaronwojtaszek@gmail.com" aria-label="Email"><i class="icon solid fa-envelope"></i></a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="page-content">
+
+                <div class="section">
+                    <h1 class="section-title">About</h1>
+
+                    <!-- Optional: Add a profile photo -->
+                    <!-- <img src="assets/images/photo.jpg" alt="Aaron Wojtaszek" class="about-photo" /> -->
+
+                    <div class="about-intro">
+                        <p>[Write a short bio here. Describe who you are, what you do, and what you're passionate about. This is your chance to make a personal connection with visitors.]</p>
+                        <p>[Add more details about your professional background, your approach to work, or your personal philosophy.]</p>
+                    </div>
+                </div>
+
+                <!-- Experience -->
+                <div class="section">
+                    <h2 class="section-subtitle">Experience</h2>
+
+                    <div class="experience-item">
+                        <div class="experience-role">Senior Product Manager</div>
+                        <div class="experience-company">[Company Name]</div>
+                        <div class="experience-date">[Start Date] — Present</div>
+                        <div class="experience-description">[Describe your role and key responsibilities.]</div>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="experience-role">[Previous Role]</div>
+                        <div class="experience-company">[Company Name]</div>
+                        <div class="experience-date">[Start Date] — [End Date]</div>
+                        <div class="experience-description">[Describe your role and key accomplishments.]</div>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="experience-role">[Earlier Role]</div>
+                        <div class="experience-company">[Company Name]</div>
+                        <div class="experience-date">[Start Date] — [End Date]</div>
+                        <div class="experience-description">[Describe your role and key accomplishments.]</div>
+                    </div>
+                </div>
+
+                <!-- Education -->
+                <div class="section">
+                    <h2 class="section-subtitle">Education</h2>
+
+                    <div class="education-item">
+                        <div class="education-degree">[Degree, e.g., B.S. in Computer Science]</div>
+                        <div class="education-school">[University Name]</div>
+                        <div class="education-date">[Year]</div>
+                    </div>
+
+                    <div class="education-item">
+                        <div class="education-degree">[Additional Degree or Certification]</div>
+                        <div class="education-school">[Institution Name]</div>
+                        <div class="education-date">[Year]</div>
+                    </div>
+                </div>
+
+                <!-- Skills & Interests -->
+                <div class="section">
+                    <h2 class="section-subtitle">Skills &amp; Interests</h2>
+                    <div class="tag-list">
+                        <span class="tag">Product Management</span>
+                        <span class="tag">Strategy</span>
+                        <span class="tag">Data Analysis</span>
+                        <span class="tag">User Research</span>
+                        <span class="tag">[Add more]</span>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <footer class="site-footer">
+                    &copy; Aaron Wojtaszek. All rights reserved.
+                </footer>
+
+            </div>
+        </main>
+
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.querySelector('.mobile-overlay');
+
+        menuToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+        });
+
+        overlay.addEventListener('click', function() {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+        });
+
+        document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+            });
+        });
+    </script>
+
+</body>
+</html>
