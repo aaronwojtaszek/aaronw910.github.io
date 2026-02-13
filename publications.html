@@ -3,11 +3,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Aaron Wojtaszek</title>
-    <meta name="description" content="Aaron Wojtaszek — Personal website." />
+    <title>Publications — Aaron Wojtaszek</title>
+    <meta name="description" content="Publications and works by Aaron Wojtaszek." />
     <meta name="author" content="Aaron Wojtaszek" />
     <meta name="referrer" content="no-referrer" />
-    <link href="https://aaronwojtaszek.com" rel="canonical" />
     <link rel="stylesheet" href="assets/css/main.css" />
 
     <!-- Google Analytics -->
@@ -44,9 +43,9 @@
 
                 <nav class="sidebar-nav">
                     <ul>
-                        <li><a href="index.html" class="active">Home</a></li>
+                        <li><a href="index.html">Home</a></li>
                         <li><a href="about.html">About</a></li>
-                        <li><a href="publications.html">Publications</a></li>
+                        <li><a href="publications.html" class="active">Publications</a></li>
                     </ul>
                 </nav>
             </div>
@@ -62,18 +61,63 @@
         <main class="main-content">
             <div class="page-content">
 
-                <div class="hero">
-                    <p class="hero-greeting">Hello, I'm</p>
-                    <h1 class="hero-title">Aaron Wojtaszek</h1>
-                    <div class="hero-description">
-                        <p>I'm a Senior Product Manager with a passion for building products that make an impact. Welcome to my personal corner of the internet.</p>
-                        <p>[Add your personal introduction here — describe your work, interests, and what drives you.]</p>
+                <div class="section">
+                    <h1 class="section-title">Publications</h1>
+                    <div class="section-text">
+                        <p>[Add an introductory note about your publications, writing, or work here. Remove this paragraph if not needed.]</p>
                     </div>
+                </div>
 
-                    <div class="hero-links">
-                        <a href="about.html"><i class="icon solid fa-user"></i> About Me</a>
-                        <a href="publications.html"><i class="icon solid fa-file-alt"></i> Publications</a>
-                        <a href="mailto:aaronwojtaszek@gmail.com"><i class="icon solid fa-envelope"></i> Get in Touch</a>
+                <!-- Year Section -->
+                <h2 class="publication-year">2025</h2>
+
+                <div class="publication-item">
+                    <div class="publication-title">
+                        <a href="#">[Publication Title]</a>
+                    </div>
+                    <div class="publication-authors">[Author 1], [Author 2], <strong>A. Wojtaszek</strong></div>
+                    <div class="publication-venue">[Journal / Conference / Venue Name]</div>
+                    <div class="publication-links">
+                        <a href="#">PDF</a>
+                        <a href="#">Link</a>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <div class="publication-title">
+                        <a href="#">[Another Publication Title]</a>
+                    </div>
+                    <div class="publication-authors"><strong>A. Wojtaszek</strong>, [Co-author]</div>
+                    <div class="publication-venue">[Venue Name]</div>
+                    <div class="publication-links">
+                        <a href="#">PDF</a>
+                        <a href="#">Code</a>
+                    </div>
+                </div>
+
+                <!-- Earlier Year -->
+                <h2 class="publication-year">2024</h2>
+
+                <div class="publication-item">
+                    <div class="publication-title">
+                        <a href="#">[Publication Title]</a>
+                    </div>
+                    <div class="publication-authors">[Author 1], <strong>A. Wojtaszek</strong>, [Author 3]</div>
+                    <div class="publication-venue">[Journal / Conference Name]</div>
+                    <div class="publication-links">
+                        <a href="#">PDF</a>
+                        <a href="#">Link</a>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <div class="publication-title">
+                        <a href="#">[Publication Title]</a>
+                    </div>
+                    <div class="publication-authors"><strong>A. Wojtaszek</strong></div>
+                    <div class="publication-venue">[Venue Name]</div>
+                    <div class="publication-links">
+                        <a href="#">PDF</a>
                     </div>
                 </div>
 
@@ -103,7 +147,6 @@
             overlay.classList.remove('active');
         });
 
-        // Close menu on nav link click (mobile)
         document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
             link.addEventListener('click', function() {
                 sidebar.classList.remove('open');
