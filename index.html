@@ -39,14 +39,13 @@
             <div>
                 <div class="sidebar-header">
                     <div class="sidebar-name"><a href="index.html">Aaron Wojtaszek</a></div>
-                    <p class="sidebar-tagline">Senior Product Manager</p>
+                    <p class="sidebar-tagline">Staff Product Manager</p>
                 </div>
 
                 <nav class="sidebar-nav">
                     <ul>
                         <li><a href="index.html" class="active">Home</a></li>
                         <li><a href="about.html">About</a></li>
-                        <li><a href="publications.html">Writing &amp; Teaching</a></li>
                     </ul>
                 </nav>
             </div>
@@ -66,13 +65,14 @@
                     <p class="hero-greeting">Hello, I'm</p>
                     <h1 class="hero-title">Aaron Wojtaszek</h1>
                     <div class="hero-description">
-                        <p>I'm a Senior Product Manager based in New York, NY with experience across fintech, streaming, e-commerce, and travel. I've built products at Walmart, Disney, Tripadvisor, Current, and Wayfair — and I teach the next generation of PMs as a Lead Instructor at BrainStation and Product School.</p>
+                        <p>I'm a Staff Product Manager based in New York, NY with experience across fintech, streaming, e-commerce, and travel. I've built products at Walmart, Disney, Tripadvisor, Current, and Wayfair — and I teach the next generation of PMs as a Lead Instructor at BrainStation and Product School.</p>
                     </div>
 
                     <div class="hero-links">
                         <a href="about.html"><i class="icon solid fa-user"></i> About Me</a>
-                        <a href="publications.html"><i class="icon solid fa-file-alt"></i> Writing &amp; Teaching</a>
-                        <a href="mailto:aaronwojtaszek@gmail.com"><i class="icon solid fa-envelope"></i> Get in Touch</a>
+                        <a href="https://www.linkedin.com/in/aaronwojtaszek/"><i class="icon brands fa-linkedin-in"></i> LinkedIn</a>
+                        <a href="https://github.com/aaronwojtaszek"><i class="icon brands fa-github"></i> GitHub</a>
+                        <a href="mailto:aaronwojtaszek@gmail.com"><i class="icon solid fa-envelope"></i> Email</a>
                     </div>
                 </div>
 
@@ -92,24 +92,36 @@
         const sidebar = document.querySelector('.sidebar');
         const overlay = document.querySelector('.mobile-overlay');
 
-        menuToggle.addEventListener('click', function() {
-            sidebar.classList.toggle('open');
-            overlay.classList.toggle('active');
-        });
+        function openMenu() {
+            sidebar.classList.add('open');
+            overlay.classList.add('active');
+            menuToggle.classList.add('active');
+            document.documentElement.classList.add('menu-open');
+        }
 
-        overlay.addEventListener('click', function() {
+        function closeMenu() {
             sidebar.classList.remove('open');
             overlay.classList.remove('active');
+            menuToggle.classList.remove('active');
+            document.documentElement.classList.remove('menu-open');
+        }
+
+        menuToggle.addEventListener('click', function() {
+            if (sidebar.classList.contains('open')) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
         });
+
+        overlay.addEventListener('click', closeMenu);
 
         // Close menu on nav link click (mobile)
         document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
-            link.addEventListener('click', function() {
-                sidebar.classList.remove('open');
-                overlay.classList.remove('active');
-            });
+            link.addEventListener('click', closeMenu);
         });
     </script>
 
 </body>
 </html>
+
