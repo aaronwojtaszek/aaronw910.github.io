@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Aaron's Mini Game — Aaron Wojtaszek</title>
+    <meta name="description" content="Play a game of Pong!" />
+    <meta name="author" content="Aaron Wojtaszek" />
+    <meta name="referrer" content="no-referrer" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-52634255-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-52634255-2');
+    </script>
+    <style>
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .game-canvas {
+            border: 2px solid #1a1a1a;
+            border-radius: 4px;
+            background-color: #1a1a1a;
+            max-width: 100%;
+            touch-action: none;
+        }
+        .game-score {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+        .game-score span {
+            color: #4a6fa5;
+        }
+        .game-instructions {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #777;
+            text-align: center;
+            line-height: 1.6;
+        }
+        .game-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.6rem 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #fff;
+            background-color: #4a6fa5;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .game-btn:hover {
+            background-color: #2d4a7a;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Mobile Header -->
+    <div class="mobile-header">
+        <div class="mobile-header-name"><a href="index.html">Aaron Wojtaszek</a></div>
+        <button class="menu-toggle" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+    <div class="mobile-overlay"></div>
+
+    <div class="site-wrapper">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div>
+                <div class="sidebar-header">
+                    <div class="sidebar-name"><a href="index.html">Aaron Wojtaszek</a></div>
+                    <p class="sidebar-tagline">Senior Product Manager</p>
+                </div>
+
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="minigame.html" class="active">Aaron's Mini Game</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="sidebar-social">
+                <a href="https://www.linkedin.com/in/aaronwojtaszek/" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://github.com/aaronwojtaszek" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="mailto:aaronwojtaszek@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="page-content">
+
+                <div class="section">
+                    <h1 class="section-title">Aaron's Mini Game</h1>
+
+                    <div class="game-container">
+                        <div class="game-score">
+                            <div>You: <span id="playerScore">0</span></div>
+                            <div>CPU: <span id="cpuScore">0</span></div>
+                        </div>
+                        <canvas id="pongCanvas" class="game-canvas" width="600" height="400"></canvas>
+                        <button class="game-btn" id="startBtn">Start Game</button>
+                        <div class="game-instructions">
+                            <strong>Desktop:</strong> Move your mouse up/down or use arrow keys<br>
+                            <strong>Mobile:</strong> Touch and drag on the canvas
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <footer class="site-footer">
+                    &copy; Aaron Wojtaszek. All rights reserved.
+                </footer>
+
+            </div>
+        </main>
+
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.querySelector('.mobile-overlay');
+
+        function openMenu() {
+            sidebar.classList.add('open');
+            overlay.classList.add('active');
+            menuToggle.classList.add('active');
+            document.documentElement.classList.add('menu-open');
+        }
+
+        function closeMenu() {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+            menuToggle.classList.remove('active');
+            document.documentElement.classList.remove('menu-open');
+        }
+
+        menuToggle.addEventListener('click', function() {
+            if (sidebar.classList.contains('open')) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
+        });
+
+        overlay.addEventListener('click', closeMenu);
+
+        document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
+            link.addEventListener('click', closeMenu);
+        });
+    </script>
+
+    <script>
+        var canvas = document.getElementById('pongCanvas');
+        var ctx = canvas.getContext('2d');
+        var startBtn = document.getElementById('startBtn');
+        var playerScoreEl = document.getElementById('playerScore');
+        var cpuScoreEl = document.getElementById('cpuScore');
+
+        // Responsive canvas sizing
+        function resizeCanvas() {
+            var container = canvas.parentElement;
+            var maxW = container.clientWidth;
+            if (maxW < 600) {
+                canvas.width = maxW;
+                canvas.height = Math.round(maxW * (2/3));
+            } else {
+                canvas.width = 600;
+                canvas.height = 400;
+            }
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        var paddleW = 10, paddleH, ballSize = 8;
+        var playerY, cpuY, ballX, ballY, ballDX, ballDY;
+        var playerScore = 0, cpuScore = 0;
+        var gameRunning = false;
+        var animFrame;
+        var cpuSpeed;
+
+        function initGame() {
+            paddleH = canvas.height * 0.18;
+            playerY = (canvas.height - paddleH) / 2;
+            cpuY = (canvas.height - paddleH) / 2;
+            ballX = canvas.width / 2;
+            ballY = canvas.height / 2;
+            var speed = canvas.width * 0.005;
+            ballDX = speed * (Math.random() > 0.5 ? 1 : -1);
+            ballDY = speed * (Math.random() > 0.5 ? 1 : -1);
+            cpuSpeed = speed * 0.7;
+        }
+
+        function drawRect(x, y, w, h, color) {
+            ctx.fillStyle = color;
+            ctx.fillRect(x, y, w, h);
+        }
+
+        function drawBall(x, y, r, color) {
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.arc(x, y, r, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function drawNet() {
+            ctx.setLineDash([6, 6]);
+            ctx.strokeStyle = '#444';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(canvas.width / 2, 0);
+            ctx.lineTo(canvas.width / 2, canvas.height);
+            ctx.stroke();
+            ctx.setLineDash([]);
+        }
+
+        function draw() {
+            // Background
+            drawRect(0, 0, canvas.width, canvas.height, '#1a1a1a');
+            drawNet();
+
+            // Paddles
+            drawRect(15, playerY, paddleW, paddleH, '#4a6fa5');
+            drawRect(canvas.width - 15 - paddleW, cpuY, paddleW, paddleH, '#e8e8e4');
+
+            // Ball
+            drawBall(ballX, ballY, ballSize, '#fff');
+        }
+
+        function update() {
+            ballX += ballDX;
+            ballY += ballDY;
+
+            // Top/bottom bounce
+            if (ballY - ballSize < 0 || ballY + ballSize > canvas.height) {
+                ballDY = -ballDY;
+            }
+
+            // Player paddle collision
+            if (ballX - ballSize < 15 + paddleW && ballY > playerY && ballY < playerY + paddleH && ballDX < 0) {
+                ballDX = -ballDX * 1.05;
+                var hitPos = (ballY - playerY) / paddleH - 0.5;
+                ballDY = hitPos * canvas.width * 0.01;
+            }
+
+            // CPU paddle collision
+            if (ballX + ballSize > canvas.width - 15 - paddleW && ballY > cpuY && ballY < cpuY + paddleH && ballDX > 0) {
+                ballDX = -ballDX * 1.05;
+                var hitPos = (ballY - cpuY) / paddleH - 0.5;
+                ballDY = hitPos * canvas.width * 0.01;
+            }
+
+            // CPU AI
+            var cpuCenter = cpuY + paddleH / 2;
+            if (cpuCenter < ballY - 10) {
+                cpuY += cpuSpeed;
+            } else if (cpuCenter > ballY + 10) {
+                cpuY -= cpuSpeed;
+            }
+            cpuY = Math.max(0, Math.min(canvas.height - paddleH, cpuY));
+
+            // Score
+            if (ballX - ballSize < 0) {
+                cpuScore++;
+                cpuScoreEl.textContent = cpuScore;
+                resetBall();
+            }
+            if (ballX + ballSize > canvas.width) {
+                playerScore++;
+                playerScoreEl.textContent = playerScore;
+                resetBall();
+            }
+
+            // Cap ball speed
+            var maxSpeed = canvas.width * 0.012;
+            if (Math.abs(ballDX) > maxSpeed) ballDX = maxSpeed * Math.sign(ballDX);
+            if (Math.abs(ballDY) > maxSpeed) ballDY = maxSpeed * Math.sign(ballDY);
+        }
+
+        function resetBall() {
+            ballX = canvas.width / 2;
+            ballY = canvas.height / 2;
+            var speed = canvas.width * 0.005;
+            ballDX = speed * (Math.random() > 0.5 ? 1 : -1);
+            ballDY = speed * (Math.random() > 0.5 ? 1 : -1);
+        }
+
+        function gameLoop() {
+            if (!gameRunning) return;
+            update();
+            draw();
+            animFrame = requestAnimationFrame(gameLoop);
+        }
+
+        // Mouse control
+        canvas.addEventListener('mousemove', function(e) {
+            var rect = canvas.getBoundingClientRect();
+            var scaleY = canvas.height / rect.height;
+            playerY = (e.clientY - rect.top) * scaleY - paddleH / 2;
+            playerY = Math.max(0, Math.min(canvas.height - paddleH, playerY));
+        });
+
+        // Touch control
+        canvas.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+            var rect = canvas.getBoundingClientRect();
+            var scaleY = canvas.height / rect.height;
+            var touch = e.touches[0];
+            playerY = (touch.clientY - rect.top) * scaleY - paddleH / 2;
+            playerY = Math.max(0, Math.min(canvas.height - paddleH, playerY));
+        }, { passive: false });
+
+        // Keyboard control
+        var keysDown = {};
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+                e.preventDefault();
+                keysDown[e.key] = true;
+            }
+        });
+        document.addEventListener('keyup', function(e) {
+            keysDown[e.key] = false;
+        });
+
+        var keyInterval = setInterval(function() {
+            if (!gameRunning) return;
+            var speed = canvas.height * 0.015;
+            if (keysDown['ArrowUp']) {
+                playerY = Math.max(0, playerY - speed);
+            }
+            if (keysDown['ArrowDown']) {
+                playerY = Math.min(canvas.height - paddleH, playerY + speed);
+            }
+        }, 16);
+
+        // Start button
+        startBtn.addEventListener('click', function() {
+            if (gameRunning) {
+                gameRunning = false;
+                cancelAnimationFrame(animFrame);
+                startBtn.textContent = 'Start Game';
+            } else {
+                playerScore = 0;
+                cpuScore = 0;
+                playerScoreEl.textContent = '0';
+                cpuScoreEl.textContent = '0';
+                resizeCanvas();
+                initGame();
+                gameRunning = true;
+                startBtn.textContent = 'Reset';
+                gameLoop();
+            }
+        });
+
+        // Initial draw
+        initGame();
+        draw();
+    </script>
+
+</body>
+</html>
