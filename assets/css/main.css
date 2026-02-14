@@ -193,7 +193,7 @@ ul, ol {
 
 .hero-banner {
     position: relative;
-    min-height: 85vh;
+    height: 100vh;
     display: flex;
     align-items: center;
     overflow: hidden;
@@ -202,6 +202,7 @@ ul, ol {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 .hero-banner-overlay {
@@ -277,6 +278,15 @@ ul, ol {
     background-color: #fff;
     color: #1a1a1a;
     border-color: #fff;
+}
+
+.hero-footer {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 3rem;
+    z-index: 1;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.35);
 }
 
 /* ==========================================================================
@@ -665,7 +675,8 @@ ul, ol {
 
     /* Hero banner mobile */
     .hero-banner {
-        min-height: 70vh;
+        height: calc(100vh - 60px);
+        background-attachment: scroll;
     }
 
     .hero-banner-content {

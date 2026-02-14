@@ -359,6 +359,44 @@
 
         var WIN_SCORE = 3;
 
+        // ---- Sound Effects (Web Audio API) ----
+        var audioCtx = null;
+        function getAudioCtx() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            return audioCtx;
+        }
+        function playTone(freq, duration, type, vol) {
+            try {
+                var ctx = getAudioCtx();
+                var osc = ctx.createOscillator();
+                var gain = ctx.createGain();
+                osc.type = type || 'square';
+                osc.frequency.value = freq;
+                gain.gain.value = vol || 0.12;
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(ctx.currentTime);
+                osc.stop(ctx.currentTime + duration);
+            } catch(e) {}
+        }
+        function sndPaddle()  { playTone(440, 0.08, 'square', 0.12); }
+        function sndWall()    { playTone(300, 0.06, 'sine', 0.08); }
+        function sndScoreFor()  { playTone(660, 0.15, 'square', 0.1); }
+        function sndScoreAgainst() { playTone(180, 0.25, 'sawtooth', 0.1); }
+        function sndWin() {
+            playTone(523, 0.12, 'square', 0.12);
+            setTimeout(function(){ playTone(659, 0.12, 'square', 0.12); }, 120);
+            setTimeout(function(){ playTone(784, 0.25, 'square', 0.14); }, 240);
+        }
+        function sndLose() {
+            playTone(400, 0.15, 'sawtooth', 0.1);
+            setTimeout(function(){ playTone(300, 0.15, 'sawtooth', 0.1); }, 150);
+            setTimeout(function(){ playTone(200, 0.3, 'sawtooth', 0.12); }, 300);
+        }
+
         // Responsive canvas sizing
         function resizeCanvas() {
             var container = canvas.parentElement;
@@ -390,7 +428,7 @@
             var speed = canvas.width * 0.01;
             ballDX = speed * (Math.random() > 0.5 ? 1 : -1);
             ballDY = speed * (Math.random() > 0.5 ? 1 : -1);
-            cpuSpeed = speed * 0.7;
+            cpuSpeed = speed * 0.42;
         }
 
         function drawRect(x, y, w, h, color) {
@@ -430,25 +468,40 @@
 
             if (ballY - ballSize < 0 || ballY + ballSize > canvas.height) {
                 ballDY = -ballDY;
+                sndWall();
             }
 
             if (ballX - ballSize < 15 + paddleW && ballY > playerY && ballY < playerY + paddleH && ballDX < 0) {
                 ballDX = -ballDX * 1.05;
                 var hitPos = (ballY - playerY) / paddleH - 0.5;
                 ballDY = hitPos * canvas.width * 0.01;
+                sndPaddle();
             }
 
             if (ballX + ballSize > canvas.width - 15 - paddleW && ballY > cpuY && ballY < cpuY + paddleH && ballDX > 0) {
                 ballDX = -ballDX * 1.05;
                 var hitPos = (ballY - cpuY) / paddleH - 0.5;
                 ballDY = hitPos * canvas.width * 0.01;
+                sndPaddle();
             }
 
+            // CPU only reacts when ball is heading toward it
             var cpuCenter = cpuY + paddleH / 2;
-            if (cpuCenter < ballY - 10) {
-                cpuY += cpuSpeed;
-            } else if (cpuCenter > ballY + 10) {
-                cpuY -= cpuSpeed;
+            if (ballDX > 0) {
+                var deadZone = paddleH * 0.35;
+                if (cpuCenter < ballY - deadZone) {
+                    cpuY += cpuSpeed;
+                } else if (cpuCenter > ballY + deadZone) {
+                    cpuY -= cpuSpeed;
+                }
+            } else {
+                // Drift slowly toward center when ball is going away
+                var center = canvas.height / 2;
+                if (cpuCenter < center - 5) {
+                    cpuY += cpuSpeed * 0.3;
+                } else if (cpuCenter > center + 5) {
+                    cpuY -= cpuSpeed * 0.3;
+                }
             }
             cpuY = Math.max(0, Math.min(canvas.height - paddleH, cpuY));
 
@@ -457,18 +510,22 @@
                 cpuScore++;
                 cpuScoreEl.textContent = cpuScore;
                 if (cpuScore >= WIN_SCORE) {
+                    sndLose();
                     endGame(false);
                     return;
                 }
+                sndScoreAgainst();
                 resetBall();
             }
             if (ballX + ballSize > canvas.width) {
                 playerScore++;
                 playerScoreEl.textContent = playerScore;
                 if (playerScore >= WIN_SCORE) {
+                    sndWin();
                     endGame(true);
                     return;
                 }
+                sndScoreFor();
                 resetBall();
             }
 
