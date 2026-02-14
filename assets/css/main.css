@@ -196,6 +196,8 @@ ul, ol {
     min-height: 85vh;
     display: flex;
     align-items: center;
+    overflow: hidden;
+    background-color: #0f172a;
     background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1920&q=80');
     background-size: cover;
     background-position: center;
@@ -204,13 +206,17 @@ ul, ol {
 
 .hero-banner-overlay {
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: linear-gradient(135deg, rgba(15, 23, 42, 0.82) 0%, rgba(30, 41, 59, 0.65) 100%);
 }
 
 .hero-banner-content {
     position: relative;
     z-index: 1;
+    width: 100%;
     max-width: 680px;
     padding: 4rem 3rem;
 }

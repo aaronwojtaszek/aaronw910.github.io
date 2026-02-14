@@ -264,7 +264,7 @@
                         <canvas id="pongCanvas" class="game-canvas" width="600" height="400"></canvas>
                         <button class="game-btn" id="startBtn">Start Game</button>
                         <div class="game-instructions">
-                            First to 5 wins!<br>
+                            First to 3 wins!<br>
                             <strong>Desktop:</strong> Mouse or arrow keys &nbsp;|&nbsp; <strong>Mobile:</strong> Touch &amp; drag
                         </div>
 
@@ -357,7 +357,7 @@
         var leaderboardBody = document.getElementById('leaderboardBody');
         var leaderboardEmpty = document.getElementById('leaderboardEmpty');
 
-        var WIN_SCORE = 5;
+        var WIN_SCORE = 3;
 
         // Responsive canvas sizing
         function resizeCanvas() {
@@ -387,7 +387,7 @@
             cpuY = (canvas.height - paddleH) / 2;
             ballX = canvas.width / 2;
             ballY = canvas.height / 2;
-            var speed = canvas.width * 0.005;
+            var speed = canvas.width * 0.01;
             ballDX = speed * (Math.random() > 0.5 ? 1 : -1);
             ballDY = speed * (Math.random() > 0.5 ? 1 : -1);
             cpuSpeed = speed * 0.7;
@@ -472,7 +472,7 @@
                 resetBall();
             }
 
-            var maxSpeed = canvas.width * 0.012;
+            var maxSpeed = canvas.width * 0.024;
             if (Math.abs(ballDX) > maxSpeed) ballDX = maxSpeed * Math.sign(ballDX);
             if (Math.abs(ballDY) > maxSpeed) ballDY = maxSpeed * Math.sign(ballDY);
         }
@@ -480,7 +480,7 @@
         function resetBall() {
             ballX = canvas.width / 2;
             ballY = canvas.height / 2;
-            var speed = canvas.width * 0.005;
+            var speed = canvas.width * 0.01;
             ballDX = speed * (Math.random() > 0.5 ? 1 : -1);
             ballDY = speed * (Math.random() > 0.5 ? 1 : -1);
         }
