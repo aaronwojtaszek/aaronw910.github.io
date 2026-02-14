@@ -188,16 +188,36 @@ ul, ol {
 }
 
 /* ==========================================================================
-   Homepage
+   Homepage — Hero Banner
    ========================================================================== */
 
-.hero {
-    padding-top: 2rem;
+.hero-banner {
+    position: relative;
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1920&q=80');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.hero-banner-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.82) 0%, rgba(30, 41, 59, 0.65) 100%);
+}
+
+.hero-banner-content {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    padding: 4rem 3rem;
 }
 
 .hero-greeting {
     font-size: 1rem;
-    color: #888;
+    color: rgba(255,255,255,0.7);
     font-weight: 400;
     margin-bottom: 1rem;
     letter-spacing: 0.02em;
@@ -205,16 +225,16 @@ ul, ol {
 
 .hero-title {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     font-weight: 700;
-    color: #1a1a1a;
+    color: #fff;
     line-height: 1.25;
     margin-bottom: 1.5rem;
 }
 
 .hero-description {
     font-size: 1.1rem;
-    color: #555;
+    color: rgba(255,255,255,0.85);
     line-height: 1.8;
     margin-bottom: 2rem;
 }
@@ -229,39 +249,28 @@ ul, ol {
 
 .hero-links {
     display: flex;
-    gap: 1.5rem;
+    gap: 1rem;
     margin-top: 2rem;
 }
 
 .hero-links a {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 0.4rem;
-    padding: 0.75rem 1rem;
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: #4a6fa5;
-    border: 1px solid #d0d0cc;
-    border-radius: 8px;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    font-size: 1.3rem;
+    color: #fff;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-radius: 50%;
     transition: all 0.2s ease;
     text-decoration: none;
-    min-width: 72px;
-}
-
-.hero-links a i {
-    font-size: 1.4rem;
-}
-
-.hero-links a span {
-    font-size: 0.75rem;
-    letter-spacing: 0.02em;
 }
 
 .hero-links a:hover {
-    background-color: #4a6fa5;
-    color: #fff;
-    border-color: #4a6fa5;
+    background-color: #fff;
+    color: #1a1a1a;
+    border-color: #fff;
 }
 
 /* ==========================================================================
@@ -648,13 +657,21 @@ ul, ol {
         padding: 2rem 1rem;
     }
 
-    /* Hero section mobile sizing */
+    /* Hero banner mobile */
+    .hero-banner {
+        min-height: 70vh;
+    }
+
+    .hero-banner-content {
+        padding: 2.5rem 1.5rem;
+    }
+
     .hero-greeting {
         font-size: 0.95rem;
     }
 
     .hero-title {
-        font-size: 1.85rem;
+        font-size: 2rem;
         margin-bottom: 1.25rem;
     }
 
@@ -665,9 +682,9 @@ ul, ol {
 
     /* Hero icon links - ensure 44px touch targets on mobile */
     .hero-links a {
-        min-height: 44px;
-        min-width: 64px;
-        padding: 0.6rem 0.75rem;
+        width: 44px;
+        height: 44px;
+        font-size: 1.2rem;
     }
 
     /* Section titles */
@@ -742,8 +759,12 @@ ul, ol {
         padding: 1.5rem 0.85rem;
     }
 
+    .hero-banner-content {
+        padding: 2rem 1rem;
+    }
+
     .hero-title {
-        font-size: 1.65rem;
+        font-size: 1.75rem;
     }
 
     .mobile-header {
