@@ -43,6 +43,23 @@
             border: none;
             border-radius: 8px;
         }
+
+        /* Full-width content for watch page */
+        .watch-page-content {
+            max-width: 100%;
+            padding: 4rem 3rem;
+        }
+
+        @media screen and (max-width: 900px) {
+            .watch-page-content {
+                padding: 2.5rem 1.5rem;
+            }
+        }
+        @media screen and (max-width: 600px) {
+            .watch-page-content {
+                padding: 2rem 1rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -99,7 +116,7 @@
 
         <!-- Main Content -->
         <main class="main-content">
-            <div class="page-content" style="max-width: 100%; padding-right: 3rem;">
+            <div class="page-content watch-page-content">
 
                 <div class="section">
                     <div class="watch-container">

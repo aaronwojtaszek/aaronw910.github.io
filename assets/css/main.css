@@ -278,6 +278,8 @@ ul, ol {
     margin-left: 300px;
     flex: 1;
     min-height: 100vh;
+    position: relative;
+    z-index: 1;
 }
 
 .page-content {
