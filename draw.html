@@ -404,7 +404,7 @@
         var startX = 0, startY = 0;
 
         // Undo history - store canvas snapshots
-        var history = [];
+        var undoStack = [];
         var MAX_HISTORY = 30;
 
         // Responsive canvas
@@ -429,19 +429,19 @@
         saveHistory();
 
         function saveHistory() {
-            history.push(canvas.toDataURL());
-            if (history.length > MAX_HISTORY) history.shift();
+            undoStack.push(canvas.toDataURL());
+            if (undoStack.length > MAX_HISTORY) undoStack.shift();
         }
 
         function undo() {
-            if (history.length <= 1) return;
-            history.pop();
+            if (undoStack.length <= 1) return;
+            undoStack.pop();
             var img = new Image();
             img.onload = function() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.drawImage(img, 0, 0);
             };
-            img.src = history[history.length - 1];
+            img.src = undoStack[undoStack.length - 1];
         }
 
         // Get canvas coords from event
