@@ -2,6 +2,46 @@
 @import url("fontawesome-all.min.css");
 
 /* ==========================================================================
+   Theme Variables
+   ========================================================================== */
+
+:root {
+    --color-bg: #fafaf8;
+    --color-surface: #fff;
+    --color-surface-alt: #f0f0ec;
+    --color-text: #2d2d2d;
+    --color-heading: #1a1a1a;
+    --color-muted: #555;
+    --color-faint: #777;
+    --color-subtle: #999;
+    --color-desc: #666;
+    --color-accent: #4a6fa5;
+    --color-accent-hover: #2d4a7a;
+    --color-border: #e8e8e4;
+    --color-border-light: #f0f0ec;
+    --color-border-medium: #d0d0cc;
+    --color-icon: #888;
+}
+
+[data-theme="dark"] {
+    --color-bg: #0e0e14;
+    --color-surface: #17171f;
+    --color-surface-alt: #222230;
+    --color-text: #c8c8d0;
+    --color-heading: #e4e4ec;
+    --color-muted: #9898a0;
+    --color-faint: #78788a;
+    --color-subtle: #68687a;
+    --color-desc: #8a8a9a;
+    --color-accent: #7aaddf;
+    --color-accent-hover: #9cc3eb;
+    --color-border: #26263a;
+    --color-border-light: #1e1e2c;
+    --color-border-medium: #36364a;
+    --color-icon: #78788a;
+}
+
+/* ==========================================================================
    Reset
    ========================================================================== */
 
@@ -26,21 +66,21 @@ body {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.7;
-    color: #2d2d2d;
-    background-color: #fafaf8;
+    color: var(--color-text);
+    background-color: var(--color-bg);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
 }
 
 a {
-    color: #4a6fa5;
+    color: var(--color-accent);
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
 a:hover {
-    color: #2d4a7a;
+    color: var(--color-accent-hover);
 }
 
 img {
@@ -73,8 +113,8 @@ ul, ol {
     width: 300px;
     height: 100vh;
     padding: 3rem 2rem;
-    background-color: #fff;
-    border-right: 1px solid #e8e8e4;
+    background-color: var(--color-surface);
+    border-right: 1px solid var(--color-border);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -90,7 +130,7 @@ ul, ol {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 1.6rem;
     font-weight: 700;
-    color: #1a1a1a;
+    color: var(--color-heading);
     line-height: 1.3;
     margin-bottom: 0.5rem;
 }
@@ -101,12 +141,12 @@ ul, ol {
 }
 
 .sidebar-name a:hover {
-    color: #4a6fa5;
+    color: var(--color-accent);
 }
 
 .sidebar-tagline {
     font-size: 0.875rem;
-    color: #777;
+    color: var(--color-faint);
     line-height: 1.5;
     font-weight: 400;
 }
@@ -129,7 +169,7 @@ ul, ol {
     display: block;
     padding: 0.5rem 0;
     font-size: 0.95rem;
-    color: #555;
+    color: var(--color-muted);
     font-weight: 400;
     letter-spacing: 0.01em;
     border-bottom: none;
@@ -138,7 +178,7 @@ ul, ol {
 
 .sidebar-nav a:hover,
 .sidebar-nav a.active {
-    color: #1a1a1a;
+    color: var(--color-heading);
     padding-left: 0.25rem;
 }
 
@@ -161,15 +201,64 @@ ul, ol {
     justify-content: center;
     width: 36px;
     height: 36px;
-    color: #888;
+    color: var(--color-icon);
     font-size: 1.1rem;
     border-radius: 50%;
     transition: color 0.2s ease, background-color 0.2s ease;
 }
 
 .sidebar-social a:hover {
-    color: #1a1a1a;
-    background-color: #f0f0ec;
+    color: var(--color-heading);
+    background-color: var(--color-surface-alt);
+}
+
+/* ==========================================================================
+   Theme Toggle
+   ========================================================================== */
+
+.theme-toggle {
+    background: none;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-icon);
+    transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+    color: var(--color-heading);
+    border-color: var(--color-border-medium);
+    background-color: var(--color-surface-alt);
+}
+
+.theme-toggle svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+}
+
+.theme-toggle .icon-moon { display: none; }
+[data-theme="dark"] .theme-toggle .icon-sun { display: none; }
+[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
+
+.sidebar-header-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.mobile-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 /* ==========================================================================
@@ -301,7 +390,7 @@ ul, ol {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 1.75rem;
     font-weight: 700;
-    color: #1a1a1a;
+    color: var(--color-heading);
     margin-bottom: 1.5rem;
     line-height: 1.3;
 }
@@ -309,14 +398,14 @@ ul, ol {
 .section-subtitle {
     font-size: 1.15rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--color-heading);
     margin-bottom: 1rem;
     margin-top: 2rem;
 }
 
 .section-text {
     font-size: 1rem;
-    color: #555;
+    color: var(--color-muted);
     line-height: 1.8;
 }
 
@@ -338,12 +427,12 @@ ul, ol {
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: 2rem;
-    border: 3px solid #e8e8e4;
+    border: 3px solid var(--color-border);
 }
 
 .about-intro {
     font-size: 1.1rem;
-    color: #555;
+    color: var(--color-muted);
     line-height: 1.8;
     margin-bottom: 2rem;
 }
@@ -354,7 +443,7 @@ ul, ol {
 
 .experience-item {
     padding: 1.25rem 0;
-    border-bottom: 1px solid #e8e8e4;
+    border-bottom: 1px solid var(--color-border);
 }
 
 .experience-item:last-child {
@@ -363,31 +452,31 @@ ul, ol {
 
 .experience-role {
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--color-heading);
     font-size: 1rem;
 }
 
 .experience-company {
-    color: #4a6fa5;
+    color: var(--color-accent);
     font-size: 0.95rem;
 }
 
 .experience-date {
     font-size: 0.85rem;
-    color: #999;
+    color: var(--color-subtle);
     margin-top: 0.2rem;
 }
 
 .experience-description {
     font-size: 0.95rem;
-    color: #666;
+    color: var(--color-desc);
     margin-top: 0.5rem;
     line-height: 1.6;
 }
 
 .education-item {
     padding: 1rem 0;
-    border-bottom: 1px solid #e8e8e4;
+    border-bottom: 1px solid var(--color-border);
 }
 
 .education-item:last-child {
@@ -396,18 +485,18 @@ ul, ol {
 
 .education-degree {
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--color-heading);
     font-size: 1rem;
 }
 
 .education-school {
-    color: #4a6fa5;
+    color: var(--color-accent);
     font-size: 0.95rem;
 }
 
 .education-date {
     font-size: 0.85rem;
-    color: #999;
+    color: var(--color-subtle);
     margin-top: 0.2rem;
 }
 
@@ -424,8 +513,8 @@ ul, ol {
     display: inline-block;
     padding: 0.3rem 0.75rem;
     font-size: 0.82rem;
-    color: #555;
-    background-color: #f0f0ec;
+    color: var(--color-muted);
+    background-color: var(--color-surface-alt);
     border-radius: 4px;
     font-weight: 400;
 }
@@ -438,11 +527,11 @@ ul, ol {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 1.3rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--color-heading);
     margin-top: 2.5rem;
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
-    border-bottom: 2px solid #e8e8e4;
+    border-bottom: 2px solid var(--color-border);
 }
 
 .publication-year:first-child {
@@ -451,7 +540,7 @@ ul, ol {
 
 .publication-item {
     padding: 1rem 0;
-    border-bottom: 1px solid #f0f0ec;
+    border-bottom: 1px solid var(--color-border-light);
 }
 
 .publication-item:last-child {
@@ -460,31 +549,31 @@ ul, ol {
 
 .publication-title {
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--color-heading);
     font-size: 1rem;
     line-height: 1.5;
     margin-bottom: 0.3rem;
 }
 
 .publication-title a {
-    color: #1a1a1a;
+    color: var(--color-heading);
     transition: color 0.2s ease;
 }
 
 .publication-title a:hover {
-    color: #4a6fa5;
+    color: var(--color-accent);
 }
 
 .publication-authors {
     font-size: 0.9rem;
-    color: #777;
+    color: var(--color-faint);
     line-height: 1.5;
     margin-bottom: 0.3rem;
 }
 
 .publication-venue {
     font-size: 0.9rem;
-    color: #999;
+    color: var(--color-subtle);
     font-style: italic;
 }
 
@@ -497,17 +586,17 @@ ul, ol {
 .publication-links a {
     font-size: 0.8rem;
     font-weight: 500;
-    color: #4a6fa5;
+    color: var(--color-accent);
     padding: 0.2rem 0.5rem;
-    border: 1px solid #d0d0cc;
+    border: 1px solid var(--color-border-medium);
     border-radius: 3px;
     transition: all 0.2s ease;
 }
 
 .publication-links a:hover {
-    background-color: #4a6fa5;
+    background-color: var(--color-accent);
     color: #fff;
-    border-color: #4a6fa5;
+    border-color: var(--color-accent);
 }
 
 /* ==========================================================================
@@ -517,9 +606,9 @@ ul, ol {
 .site-footer {
     padding: 2rem 0;
     margin-top: 3rem;
-    border-top: 1px solid #e8e8e4;
+    border-top: 1px solid var(--color-border);
     font-size: 0.85rem;
-    color: #999;
+    color: var(--color-subtle);
 }
 
 /* ==========================================================================
@@ -533,8 +622,8 @@ ul, ol {
     left: 0;
     right: 0;
     height: 60px;
-    background-color: #fff;
-    border-bottom: 1px solid #e8e8e4;
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
     z-index: 200;
     padding: 0 1.25rem;
     align-items: center;
@@ -545,7 +634,7 @@ ul, ol {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 1.2rem;
     font-weight: 700;
-    color: #1a1a1a;
+    color: var(--color-heading);
 }
 
 .mobile-header-name a {
@@ -567,7 +656,7 @@ ul, ol {
     display: block;
     width: 22px;
     height: 2px;
-    background-color: #1a1a1a;
+    background-color: var(--color-heading);
     transition: all 0.3s ease;
 }
 
@@ -582,6 +671,10 @@ ul, ol {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+[data-theme="dark"] .mobile-overlay {
+    background-color: rgba(0,0,0,0.55);
 }
 
 .mobile-overlay.active {
