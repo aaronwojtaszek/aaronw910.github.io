@@ -128,7 +128,7 @@ ul, ol {
     flex-direction: column;
     justify-content: space-between;
     overflow-y: auto;
-    z-index: 100;
+    z-index: 160;
 }
 
 .sidebar-header {
