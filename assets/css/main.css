@@ -241,6 +241,12 @@ ul, ol {
 .theme-toggle svg {
     width: 16px;
     height: 16px;
+}
+.theme-toggle .icon-sun {
+    stroke: currentColor;
+    fill: none;
+}
+.theme-toggle .icon-moon {
     fill: currentColor;
 }
 
