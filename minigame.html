@@ -66,58 +66,6 @@
             background-color: #2d4a7a;
         }
 
-        /* Leaderboard */
-        .leaderboard {
-            margin-top: 2rem;
-            width: 100%;
-            max-width: 400px;
-        }
-        .leaderboard h2 {
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #1a1a1a;
-            margin-bottom: 0.75rem;
-            text-align: center;
-        }
-        .leaderboard table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-        }
-        .leaderboard th {
-            text-align: left;
-            padding: 0.5rem 0.75rem;
-            border-bottom: 2px solid #e8e8e4;
-            color: #777;
-            font-weight: 500;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-        .leaderboard th:last-child {
-            text-align: right;
-        }
-        .leaderboard td {
-            padding: 0.5rem 0.75rem;
-            border-bottom: 1px solid #f0f0ec;
-            color: #2d2d2d;
-        }
-        .leaderboard td:first-child {
-            color: #4a6fa5;
-            font-weight: 600;
-        }
-        .leaderboard td:last-child {
-            text-align: right;
-            font-weight: 500;
-        }
-        .leaderboard-empty {
-            text-align: center;
-            color: #999;
-            font-size: 0.85rem;
-            padding: 1rem 0;
-        }
-
         /* Win modal */
         .modal-overlay {
             position: fixed;
@@ -155,22 +103,6 @@
             font-size: 0.95rem;
             margin-bottom: 1.25rem;
         }
-        .modal input {
-            width: 100px;
-            padding: 0.5rem 0.75rem;
-            font-size: 1.2rem;
-            font-family: inherit;
-            text-align: center;
-            text-transform: uppercase;
-            border: 2px solid #d0d0cc;
-            border-radius: 6px;
-            outline: none;
-            letter-spacing: 0.15em;
-            transition: border-color 0.2s ease;
-        }
-        .modal input:focus {
-            border-color: #4a6fa5;
-        }
         .modal-actions {
             display: flex;
             gap: 0.75rem;
@@ -191,22 +123,6 @@
         }
         .modal-btn-primary:hover {
             background-color: #2d4a7a;
-        }
-        .modal-btn-secondary {
-            padding: 0.5rem 1.5rem;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #555;
-            background: none;
-            border: 1px solid #d0d0cc;
-            border-radius: 6px;
-            cursor: pointer;
-            font-family: inherit;
-            transition: all 0.2s ease;
-        }
-        .modal-btn-secondary:hover {
-            border-color: #999;
-            color: #1a1a1a;
         }
     </style>
 </head>
@@ -238,6 +154,7 @@
                         <li><a href="index.html">Home</a></li>
                         <li><a href="about.html">About</a></li>
                         <li><a href="minigame.html" class="active">Pong</a></li>
+                        <li><a href="draw.html">Draw</a></li>
                     </ul>
                 </nav>
             </div>
@@ -267,19 +184,6 @@
                             First to 3 wins!<br>
                             <strong>Desktop:</strong> Mouse or arrow keys &nbsp;|&nbsp; <strong>Mobile:</strong> Touch &amp; drag
                         </div>
-
-                        <!-- Leaderboard -->
-                        <div class="leaderboard">
-                            <h2>Leaderboard</h2>
-                            <table>
-                                <thead>
-                                    <tr><th>#</th><th>Initials</th><th>Score</th></tr>
-                                </thead>
-                                <tbody id="leaderboardBody">
-                                </tbody>
-                            </table>
-                            <div class="leaderboard-empty" id="leaderboardEmpty">No scores yet. Be the first!</div>
-                        </div>
                     </div>
                 </div>
 
@@ -297,12 +201,9 @@
     <div class="modal-overlay" id="winModal">
         <div class="modal">
             <h3 id="modalTitle">You Win!</h3>
-            <p id="modalMsg">Final score: 5 - 0</p>
-            <label for="initialsInput" style="display:none;">Enter your initials:</label>
-            <input type="text" id="initialsInput" maxlength="3" placeholder="AAA" />
+            <p id="modalMsg">Final score: 3 - 0</p>
             <div class="modal-actions">
-                <button class="modal-btn-primary" id="modalSave">Save Score</button>
-                <button class="modal-btn-secondary" id="modalSkip">Skip</button>
+                <button class="modal-btn-primary" id="modalClose">Close</button>
             </div>
         </div>
     </div>
@@ -351,11 +252,7 @@
         var winModal = document.getElementById('winModal');
         var modalTitle = document.getElementById('modalTitle');
         var modalMsg = document.getElementById('modalMsg');
-        var initialsInput = document.getElementById('initialsInput');
-        var modalSave = document.getElementById('modalSave');
-        var modalSkip = document.getElementById('modalSkip');
-        var leaderboardBody = document.getElementById('leaderboardBody');
-        var leaderboardEmpty = document.getElementById('leaderboardEmpty');
+        var modalClose = document.getElementById('modalClose');
 
         var WIN_SCORE = 3;
 
@@ -546,24 +443,9 @@
             gameRunning = false;
             cancelAnimationFrame(animFrame);
             startBtn.textContent = 'Play Again';
-
-            if (playerWon) {
-                modalTitle.textContent = 'You Win!';
-                modalMsg.textContent = 'Final score: ' + playerScore + ' - ' + cpuScore;
-                initialsInput.value = '';
-                initialsInput.style.display = '';
-                initialsInput.parentElement.querySelector('label').style.display = '';
-                modalSave.style.display = '';
-                winModal.classList.add('active');
-                setTimeout(function() { initialsInput.focus(); }, 100);
-            } else {
-                modalTitle.textContent = 'CPU Wins';
-                modalMsg.textContent = 'Final score: ' + playerScore + ' - ' + cpuScore;
-                initialsInput.style.display = 'none';
-                initialsInput.parentElement.querySelector('label').style.display = 'none';
-                modalSave.style.display = 'none';
-                winModal.classList.add('active');
-            }
+            modalTitle.textContent = playerWon ? 'You Win!' : 'CPU Wins';
+            modalMsg.textContent = 'Final score: ' + playerScore + ' - ' + cpuScore;
+            winModal.classList.add('active');
         }
 
         function gameLoop() {
@@ -627,82 +509,14 @@
             gameLoop();
         });
 
-        // ---- Leaderboard ----
-        var STORAGE_KEY = 'pong_leaderboard';
-
-        function getLeaderboard() {
-            try {
-                var data = JSON.parse(localStorage.getItem(STORAGE_KEY));
-                return Array.isArray(data) ? data : [];
-            } catch(e) {
-                return [];
-            }
-        }
-
-        function saveLeaderboard(board) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(board));
-        }
-
-        function addScore(initials, pScore, cScore) {
-            var board = getLeaderboard();
-            board.push({ initials: initials.toUpperCase(), playerScore: pScore, cpuScore: cScore });
-            // Sort: highest player score first, then lowest cpu score
-            board.sort(function(a, b) {
-                if (b.playerScore !== a.playerScore) return b.playerScore - a.playerScore;
-                return a.cpuScore - b.cpuScore;
-            });
-            // Keep top 10
-            board = board.slice(0, 10);
-            saveLeaderboard(board);
-            renderLeaderboard();
-        }
-
-        function renderLeaderboard() {
-            var board = getLeaderboard();
-            leaderboardBody.innerHTML = '';
-            if (board.length === 0) {
-                leaderboardEmpty.style.display = '';
-                return;
-            }
-            leaderboardEmpty.style.display = 'none';
-            for (var i = 0; i < board.length; i++) {
-                var row = document.createElement('tr');
-                row.innerHTML = '<td>' + (i + 1) + '</td><td>' + escapeHtml(board[i].initials) + '</td><td>' + board[i].playerScore + ' - ' + board[i].cpuScore + '</td>';
-                leaderboardBody.appendChild(row);
-            }
-        }
-
-        function escapeHtml(str) {
-            var div = document.createElement('div');
-            div.textContent = str;
-            return div.innerHTML;
-        }
-
-        // Modal handlers
-        modalSave.addEventListener('click', function() {
-            var initials = initialsInput.value.replace(/[^a-zA-Z0-9]/g, '').substring(0, 3);
-            if (initials.length === 0) {
-                initialsInput.focus();
-                return;
-            }
-            addScore(initials, playerScore, cpuScore);
+        // Modal close handler
+        modalClose.addEventListener('click', function() {
             winModal.classList.remove('active');
-        });
-
-        modalSkip.addEventListener('click', function() {
-            winModal.classList.remove('active');
-        });
-
-        initialsInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                modalSave.click();
-            }
         });
 
         // Init
         initGame();
         draw();
-        renderLeaderboard();
     </script>
 
 </body>
