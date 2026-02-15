@@ -61,6 +61,15 @@ html.menu-open {
     overflow: hidden;
 }
 
+html.menu-open .main-content {
+    pointer-events: none;
+}
+
+html.menu-open iframe,
+html.menu-open canvas {
+    visibility: hidden;
+}
+
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     font-size: 16px;
