@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://aaronwojtaszek.com/</loc>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://aaronwojtaszek.com/about.html</loc>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://aaronwojtaszek.com/minigame.html</loc>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://aaronwojtaszek.com/draw.html</loc>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://aaronwojtaszek.com/watch.html</loc>
+        <priority>0.5</priority>
+    </url>
+</urlset>
