@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aaronwojtaszek.com/sitemap.xml
